@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Animações para mensagens */
 .message-appear {
   animation: slideIn 0.5s ease-out;
   opacity: 0;
@@ -19,6 +20,51 @@
   }
 }
 
+/* Animação do ícone de envio */
+.send-icon-hover {
+  transition: transform 0.3s ease;
+}
+
+.send-icon-hover:hover {
+  transform: translateX(4px) scale(1.1);
+}
+
+/* Animação do ícone do bot */
+.bot-icon-pulse {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Efeito de digitação */
+.typing-effect {
+  overflow: hidden;
+  border-right: 2px solid #3b82f6;
+  white-space: nowrap;
+  animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+}
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: #3b82f6 }
+}
+
+/* Scrollbar personalizada */
 .custom-scrollbar {
   scrollbar-width: thin;
   scrollbar-color: rgba(156, 163, 175, 0.5) transparent;
@@ -39,4 +85,31 @@
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background-color: rgba(156, 163, 175, 0.7);
+}
+
+/* Efeito de glass morphism */
+.glass-effect {
+  background: rgba(17, 25, 40, 0.75);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.125);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+}
+
+/* Animação de gradiente */
+.gradient-animate {
+  background: linear-gradient(270deg, #3b82f6, #1d4ed8);
+  background-size: 200% 200%;
+  animation: gradient 15s ease infinite;
+}
+
+@keyframes gradient {
+  0% { background-position: 0% 50% }
+  50% { background-position: 100% 50% }
+  100% { background-position: 0% 50% }
+}
+
+/* Estilo para mensagens da IA */
+.glass-effect p {
+  white-space: pre-wrap;
+  line-height: 1.6;
 }

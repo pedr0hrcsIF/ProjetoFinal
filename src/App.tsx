@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { MessageSquareCode } from 'lucide-react';
+import { MessageSquareCode, Sparkles } from 'lucide-react';
 import { ChatMessage } from './components/ChatMessage';
 import { ChatInput } from './components/ChatInput';
 import { Message, ChatState, UserData } from './types/chat';
@@ -51,6 +51,15 @@ function App() {
       chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
     }
   }, [chatState.messages]);
+
+  const formatAIResponse = (response: string) => {
+    return response
+      .replace(/\*\*/g, '') // Remove **
+      .replace(/\*/g, '') // Remove *
+      .split('\n') // Split by newlines
+      .filter(line => line.trim()) // Remove empty lines
+      .join('\n\n'); // Add double newlines for better readability
+  };
 
   const saveUserData = async (completeUserData: UserData) => {
     try {
@@ -108,7 +117,11 @@ function App() {
         throw new Error('Invalid response format from AI API');
       }
 
-      return data;
+      // Format the AI response before returning
+      return {
+        ...data,
+        message: formatAIResponse(data.message)
+      };
     } catch (error) {
       console.error('Error calling AI API:', error);
       throw error;
@@ -227,24 +240,27 @@ function App() {
 
   return (
     <div 
-    className="min-h-screen bg-cover bg-center bg-no-repeat relative"
-    style={{
-      backgroundImage: `url('/media/background.jpg')`,
-    }}
-  >
+      className="min-h-screen bg-cover bg-center bg-no-repeat relative"
+      style={{
+        backgroundImage: 'url("/media/background.jpg")',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        backgroundBlendMode: 'overlay'
+      }}
+    >
       <div className="max-w-4xl mx-auto p-4">
-        <div className="bg-gray-800 rounded-t-lg p-4 border-b border-gray-700 flex items-center gap-2">
-          <div className="bg-blue-500 p-2 rounded-full">
-            <MessageSquareCode className="text-white" size={24} />
+        <div className="glass-effect rounded-t-lg p-4 border-b border-gray-700 flex items-center gap-2">
+          <div className="gradient-animate p-2 rounded-full transform transition-transform hover:scale-110">
+            <MessageSquareCode className="text-white animate-spin-slow" size={24} />
           </div>
-          <h1 className="text-xl font-semibold text-white">LocalAItycs Assistant</h1>
+          <h1 className="text-xl font-semibold text-white typing-effect">LocalAItycs Assistant</h1>
+          <Sparkles className="text-yellow-400 animate-pulse ml-2" size={20} />
         </div>
         <div 
           ref={chatContainerRef}
-          className="bg-gray-800 h-[70vh] overflow-y-auto p-4 flex flex-col gap-4 custom-scrollbar"
+          className="glass-effect h-[70vh] overflow-y-auto p-4 flex flex-col gap-4 custom-scrollbar"
         >
           {chatState.messages.length === 0 ? (
-            <div className="text-center text-gray-400 mt-8">
+            <div className="text-center text-gray-400 mt-8 typing-effect">
               Envie uma mensagem para iniciar a conversa
             </div>
           ) : (
@@ -259,7 +275,7 @@ function App() {
             ))
           )}
         </div>
-        <div className="bg-gray-800 rounded-b-lg p-4 border-t border-gray-700">
+        <div className="glass-effect rounded-b-lg p-4 border-t border-gray-700">
           <ChatInput
             onSendMessage={sendMessage}
             disabled={chatState.isLoading}
