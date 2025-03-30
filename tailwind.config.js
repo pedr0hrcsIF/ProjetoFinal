@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {
       animation: {
-        'spin-slow': 'spin 3s linear infinite',
+        'spin-slow': 'spin 6s linear infinite', // Changed from 3s to 6s to slow down the rotation
       },
       keyframes: {
         wiggle: {

@@ -117,7 +117,6 @@ function App() {
         throw new Error('Invalid response format from AI API');
       }
 
-      // Format the AI response before returning
       return {
         ...data,
         message: formatAIResponse(data.message)
